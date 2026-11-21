@@ -1,5 +1,5 @@
 // Cloudflare Pages Function: /api/token?channel=class1&uid=1234567
-// Agora AccessToken2 (007) banata hai. Env vars: AGORA_APP_ID, AGORA_APP_CERTIFICATE
+// Agora AccessToken2 (007) banata hai. Env vars: 262e2535d7c440988d6b4b4532194c56, 8063a4634d6e40ddbe362c797a72dd21
 
 const enc = new TextEncoder();
 const concat = (...a) => {
