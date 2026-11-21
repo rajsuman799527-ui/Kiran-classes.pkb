@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A1F5C">
+<title>Live Class</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0A1F5C; --navy2:#102A7A; --blue:#2563EB; --blue-d:#1D4ED8; --ice:#EEF4FF; --mist:#F6F9FF;
+  --ink:#0B1736; --mute:#62708F; --line:#E4EAF6; --red:#E5484D; --green:#22C55E;
+  --shadow:0 1px 2px rgba(10,31,92,.06),0 12px 32px -12px rgba(10,31,92,.18);
+}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:'Manrope',system-ui,sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid #93B4FF;outline-offset:2px}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sl{display:none}.off .sl{display:block}
+
+.screen{display:none;min-height:100%}
+.screen.on{display:flex}
+
+/* ---------- Login ---------- */
+#login{flex-direction:column;background:var(--navy)}
+.l-hero{position:relative;padding:calc(32px + env(safe-area-inset-top)) 26px 70px;color:#fff;overflow:hidden}
+.l-hero::before{content:"";position:absolute;right:-90px;top:-90px;width:300px;height:300px;border-radius:50%;border:1px solid rgba(255,255,255,.14)}
+.l-hero::after{content:"";position:absolute;right:-30px;top:-30px;width:180px;height:180px;border-radius:50%;border:1px solid rgba(255,255,255,.14)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;position:relative;z-index:1}
+.mark{width:38px;height:38px;border-radius:12px;background:#fff;color:var(--blue);display:grid;place-items:center}
+.l-hero h1{font-size:34px;line-height:1.12;font-weight:800;letter-spacing:-.025em;margin-top:34px;position:relative;z-index:1;max-width:11em}
+.l-hero p{color:#B7C6F2;margin-top:12px;line-height:1.55;max-width:26em;position:relative;z-index:1}
+.preview{display:flex;gap:10px;margin-top:26px;position:relative;z-index:1}
+.pv{flex:1;aspect-ratio:4/3;border-radius:16px;background:linear-gradient(160deg,#1E3F9E,#14307F);border:1px solid rgba(255,255,255,.14);position:relative;display:grid;place-items:center}
+.pv.big{flex:1.6;background:linear-gradient(160deg,#2F5BE0,#1D44B8)}
+.pv b{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:15px}
+.pv em{position:absolute;left:8px;top:8px;font-style:normal;font-size:11px;font-weight:700;background:var(--red);padding:3px 8px;border-radius:99px;display:flex;gap:5px;align-items:center}
+.pv em::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
+.sheet{flex:1;background:#fff;border-radius:30px 30px 0 0;margin-top:-34px;padding:30px 24px calc(28px + env(safe-area-inset-bottom));position:relative;z-index:2;display:flex;flex-direction:column;box-shadow:0 -10px 40px rgba(0,0,0,.12)}
+.sheet h2{font-size:22px;font-weight:800;letter-spacing:-.01em}
+.sheet .sub{color:var(--mute);margin-top:6px;font-size:14px;line-height:1.5}
+label{display:block;font-weight:700;font-size:13px;margin:22px 0 8px}
+.field{width:100%;padding:16px 18px;border:1.5px solid var(--line);border-radius:16px;background:var(--mist);font-size:16px;font-weight:500;outline:none;transition:border-color .15s,box-shadow .15s,background .15s}
+.field:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 4px #DCE8FF}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--ice);padding:5px;border-radius:16px}
+.seg button{border:0;background:transparent;padding:13px 10px;border-radius:12px;font-weight:700;color:var(--mute);display:flex;gap:8px;align-items:center;justify-content:center;transition:all .15s}
+.seg button.on{background:#fff;color:var(--blue-d);box-shadow:0 2px 8px rgba(29,78,216,.18)}
+.btn{border:0;background:linear-gradient(180deg,#3B72F2,var(--blue-d));color:#fff;font-weight:700;font-size:16px;padding:17px;border-radius:16px;width:100%;box-shadow:0 10px 24px -8px rgba(29,78,216,.6);transition:transform .1s}
+.btn:active{transform:scale(.985)}
+.btn:disabled{opacity:.6}
+.btn.ghost{background:var(--ice);color:var(--blue-d);box-shadow:none}
+.err{color:var(--red);font-size:13px;font-weight:600;margin-top:12px;min-height:18px;line-height:1.4}
+.push{margin-top:auto;padding-top:22px}
+
+/* ---------- Home ---------- */
+#home{flex-direction:column;background:var(--mist)}
+.h-top{background:var(--navy);color:#fff;padding:calc(22px + env(safe-area-inset-top)) 22px 86px;border-radius:0 0 34px 34px}
+.h-row{display:flex;justify-content:space-between;align-items:center}
+.who{display:flex;align-items:center;gap:12px}
+.av{width:46px;height:46px;border-radius:50%;background:#fff;color:var(--blue-d);display:grid;place-items:center;font-weight:800;font-size:18px}
+.who small{display:block;color:#A9BBEF;font-size:12px;font-weight:600}
+.who b{font-size:17px}
+.chip{border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;border-radius:99px;padding:8px 14px;font-weight:600;font-size:13px}
+.h-top h1{font-size:28px;line-height:1.2;font-weight:800;letter-spacing:-.02em;margin-top:26px}
+.h-body{padding:0 20px calc(30px + env(safe-area-inset-bottom));margin-top:-56px;max-width:560px;width:100%;margin-left:auto;margin-right:auto}
+.card{background:#fff;border-radius:24px;padding:22px;box-shadow:var(--shadow)}
+.card label{margin-top:0}
+.code-row{display:flex;gap:10px}
+.code-row .field{flex:1;min-width:0}
+.gen{border:0;background:var(--ice);color:var(--blue-d);border-radius:16px;padding:0 16px;font-weight:700;font-size:13px;white-space:nowrap}
+.card .btn{margin-top:16px}
+.sec{display:flex;justify-content:space-between;align-items:baseline;margin:28px 4px 12px}
+.sec h3{font-size:17px;font-weight:800}
+.sec button{border:0;background:none;color:var(--blue-d);font-weight:700;font-size:13px}
+.rec{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin-bottom:10px;width:100%;text-align:left}
+.rec .ic{width:44px;height:44px;border-radius:14px;background:var(--ice);color:var(--blue-d);display:grid;place-items:center;flex:none}
+.rec b{display:block;font-size:15px}.rec small{color:var(--mute);font-size:12px}
+.rec .go{margin-left:auto;color:var(--blue-d);font-weight:700;font-size:13px}
+.empty{border:1.5px dashed #C9D6F2;border-radius:18px;padding:24px;text-align:center;color:var(--mute);font-size:14px;line-height:1.55}
+
+/* ---------- Room ---------- */
+#room{flex-direction:column;background:#07122F;color:#fff;height:100%;min-height:0;overflow:hidden}
+.r-top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:calc(14px + env(safe-area-inset-top)) 16px 10px}
+.r-name{display:flex;align-items:center;gap:10px;min-width:0}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;background:rgba(229,72,77,.18);color:#FF9A9D;padding:6px 10px;border-radius:99px}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--red);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.r-name b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pillrow{display:flex;gap:8px;align-items:center}
+.pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border-radius:99px;padding:7px 12px;font-size:12px;font-weight:700;border:0;color:#fff}
+.pill svg.i{width:15px;height:15px}
+.net{display:flex;gap:2px;align-items:flex-end;height:14px}
+.net s{width:3px;background:rgba(255,255,255,.25);border-radius:2px;display:block}
+.net s:nth-child(1){height:5px}.net s:nth-child(2){height:8px}.net s:nth-child(3){height:11px}.net s:nth-child(4){height:14px}
+.net.q1 s:nth-child(-n+1),.net.q2 s:nth-child(-n+2),.net.q3 s:nth-child(-n+3),.net.q4 s{background:var(--green)}
+.net.q1 s:nth-child(-n+1){background:var(--red)}
+.stagewrap{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;padding:6px 12px 10px}
+#stage{flex:1;min-height:0;display:flex}
+#strip{display:flex;gap:10px;overflow-x:auto;flex:none}
+#strip:empty{display:none}
+.tile{position:relative;background:linear-gradient(160deg,#122252,#0D1A42);border-radius:22px;overflow:hidden;border:2px solid transparent;transition:border-color .15s,box-shadow .15s}
+#stage .tile{flex:1}
+#strip .tile{width:118px;height:150px;flex:none;border-radius:18px}
+.tile.speaking{border-color:#4F86FF;box-shadow:0 0 0 4px rgba(79,134,255,.25)}
+.tile .vid{position:absolute;inset:0}
+.tile .vid video{object-fit:cover!important}
+.tile .ph{position:absolute;inset:0;display:grid;place-items:center}
+.tile .ph span{width:84px;height:84px;border-radius:50%;background:linear-gradient(160deg,#3B72F2,#1D44B8);display:grid;place-items:center;font-size:32px;font-weight:800}
+#strip .ph span{width:52px;height:52px;font-size:20px}
+.tile .nm{position:absolute;left:10px;bottom:10px;font-size:12px;font-weight:700;background:rgba(7,18,47,.6);backdrop-filter:blur(8px);padding:5px 10px;border-radius:99px;z-index:2;max-width:calc(100% - 20px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .role{position:absolute;right:10px;top:10px;font-size:11px;font-weight:800;background:var(--blue);padding:4px 9px;border-radius:99px;z-index:2}
+.dock{display:flex;justify-content:center;padding:6px 16px calc(18px + env(safe-area-inset-bottom))}
+.dock-in{display:flex;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);padding:10px;border-radius:30px;backdrop-filter:blur(14px)}
+.cb{width:58px;height:58px;border-radius:20px;border:0;background:rgba(255,255,255,.1);color:#fff;display:grid;place-items:center;transition:background .15s,transform .1s}
+.cb:active{transform:scale(.94)}
+.cb.off{background:#fff;color:var(--navy)}
+.cb.on{background:var(--blue)}
+.cb.end{background:var(--red);width:76px}
+.hint{text-align:center;color:#8FA3D6;font-size:12px;font-weight:600;padding:0 16px 4px;min-height:16px}
+
+.toast{position:fixed;left:50%;bottom:calc(110px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:#fff;color:var(--ink);font-weight:700;font-size:13px;padding:11px 18px;border-radius:99px;box-shadow:0 12px 30px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:all .25s;z-index:50;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (min-width:900px){
+  #login{flex-direction:row}
+  .l-hero{flex:1.1;padding:56px 64px;display:flex;flex-direction:column;justify-content:center}
+  .l-hero h1{font-size:50px}
+  .sheet{flex:1;max-width:520px;border-radius:0;margin:0;justify-content:center;padding:56px;box-shadow:none}
+  .push{margin-top:28px}
+  .h-top{padding-left:max(22px,calc(50% - 280px));padding-right:max(22px,calc(50% - 280px))}
+  #strip .tile{width:170px;height:110px}
+  .cb{width:62px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<section class="screen on" id="login">
+  <div class="l-hero">
+    <div class="brand"><div class="mark"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="6" width="12" height="12" rx="3"/><path d="m15 10.5 6-3.5v10l-6-3.5"/></svg></div>Live Class</div>
+    <h1>Padhai, seedha live.</h1>
+    <p>Teacher ke saath HD video class mein judo. Koi download nahi, bas ek code.</p>
+    <div class="preview">
+      <div class="pv big"><em>LIVE</em><b>T</b></div>
+      <div class="pv"><b>S</b></div>
+      <div class="pv"><b>S</b></div>
+    </div>
+  </div>
+  <div class="sheet">
+    <h2>Shuru karte hain</h2>
+    <p class="sub">Apna naam likho aur batao aap teacher ho ya student.</p>
+    <label for="name">Aapka naam</label>
+    <input class="field" id="name" placeholder="Jaise: Rahul Sharma" autocomplete="name" maxlength="30">
+    <label>Aap kaun ho?</label>
+    <div class="seg" id="roleSeg">
+      <button data-r="student" class="on"><svg class="i" viewBox="0 0 24 24"><path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.5V16c0 1.5 2.2 3 5 3s5-1.5 5-3v-4.500"/></svg>Student</button>
+      <button data-r="teacher"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>Teacher</button>
+    </div>
+    <div class="err" id="loginErr"></div>
+    <div class="push"><button class="btn" id="loginBtn">Aage badho</button></div>
+  </div>
+</section>
+
+<!-- ============ HOME ============ -->
+<section class="screen" id="home">
+  <div class="h-top">
+    <div class="h-row">
+      <div class="who"><div class="av" id="homeAv">R</div><div><small id="homeRole">Student</small><b id="homeName">Naam</b></div></div>
+      <button class="chip" id="logout">Profile badlo</button>
+    </div>
+    <h1 id="heroT">Class join karo</h1>
+  </div>
+  <div class="h-body">
+    <div class="card">
+      <label for="code">Class code</label>
+      <div class="code-row">
+        <input class="field" id="code" placeholder="Jaise: maths-10" autocapitalize="none" autocomplete="off" maxlength="40">
+        <button class="gen" id="genBtn" hidden>Naya code</button>
+      </div>
+      <div class="err" id="homeErr"></div>
+      <button class="btn" id="joinBtn">Class join karo</button>
+    </div>
+    <div class="sec"><h3>Pichli classes</h3><button id="clearRec" hidden>Saaf karo</button></div>
+    <div id="recList"></div>
+  </div>
+</section>
+
+<!-- ============ ROOM ============ -->
+<section class="screen" id="room">
+  <div class="r-top">
+    <div class="r-name"><span class="live"><i></i>LIVE</span><b id="roomName">class</b></div>
+    <div class="pillrow">
+      <span class="pill" id="timer">00:00</span>
+      <span class="pill"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-3.5 3-5.5 6.5-5.5s6 2 6.5 5.500"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.5c1.700.8 2.8 2.5 3 5"/></svg><span id="count">1</span></span>
+      <span class="pill"><span class="net q4" id="net"><s></s><s></s><s></s><s></s></span></span>
+      <button class="pill" id="copyBtn" aria-label="Class link copy karo"><svg class="i" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2.500"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg>Link</button>
+    </div>
+  </div>
+  <div class="stagewrap"><div id="stage"></div><div id="strip"></div></div>
+  <div class="hint" id="roomHint"></div>
+  <div class="dock"><div class="dock-in">
+    <button class="cb off" id="micBtn" aria-label="Mic"><svg class="i" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/><line class="sl" x1="4" y1="4" x2="20" y2="20"/></svg></button>
+    <button class="cb off" id="camBtn" aria-label="Camera"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="6" width="12" height="12" rx="3"/><path d="m15 10.5 6-3.5v10l-6-3.500"/><line class="sl" x1="4" y1="4" x2="20" y2="20"/></svg></button>
+    <button class="cb" id="shareBtn" aria-label="Screen share" hidden><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></button>
+    <button class="cb end" id="leaveBtn" aria-label="Class chhodo"><svg class="i" viewBox="0 0 24 24"><path d="M3 12c5-4.5 13-4.5 18 0l-2.5 3-3-1.5V11a10 10 0 0 0-6 0v2.5L5.5 15 3 12z"/></svg></button>
+  </div></div>
+</section>
+<div class="toast" id="toast"></div>
+
+<script src="https://download.agora.io/sdk/release/AgoraRTC_N-4.23.1.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const store = {
+  get(k){ try{ return localStorage.getItem(k) }catch(e){ return null } },
+  set(k,v){ try{ localStorage.setItem(k,v) }catch(e){} }
+};
+let role = store.get('role') || 'student';
+let name = store.get('name') || '';
+const show = (id) => document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id));
+let toastT;
+function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2400); }
+const isTeacher = () => role === 'teacher';
+
+/* ---------- Login ---------- */
+function syncSeg(){ document.querySelectorAll('#roleSeg button').forEach(x => x.classList.toggle('on', x.dataset.r === role)); }
+document.querySelectorAll('#roleSeg button').forEach(b => b.onclick = () => { role = b.dataset.r; syncSeg(); });
+$('loginBtn').onclick = () => {
+  const n = $('name').value.trim();
+  if (n.length < 2) { $('loginErr').textContent = 'Naam kam se kam 2 akshar ka likho.'; return; }
+  name = n; store.set('name', n); store.set('role', role); $('loginErr').textContent = ''; openHome();
+};
+$('name').addEventListener('keydown', e => { if (e.key === 'Enter') $('loginBtn').click(); });
+$('logout').onclick = () => { $('name').value = name; syncSeg(); show('login'); };
+
+/* ---------- Home ---------- */
+const getRec = () => { try { return JSON.parse(store.get('recent') || '[]'); } catch(e){ return []; } };
+function addRec(code){ const r = [code, ...getRec().filter(c => c !== code)].slice(0, 5); store.set('recent', JSON.stringify(r)); }
+function renderRec(){
+  const r = getRec(), box = $('recList'); box.innerHTML = '';
+  $('clearRec').hidden = !r.length;
+  if (!r.length) {
+    const d = document.createElement('div'); d.className = 'empty';
+    d.textContent = isTeacher() ? 'Abhi koi class nahi chali. Naya code banao aur students ko bhejo.' : 'Abhi koi class nahi judi. Teacher se code lo aur upar daalo.';
+    box.appendChild(d); return;
+  }
+  r.forEach(c => {
+    const b = document.createElement('button'); b.className = 'rec';
+    b.innerHTML = '<span class="ic"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="6" width="12" height="12" rx="3"/><path d="m15 10.5 6-3.5v10l-6-3.500"/></svg></span><span><b></b><small>Dobara join karo</small></span><span class="go">Join</span>';
+    b.querySelector('b').textContent = c;
+    b.onclick = () => { $('code').value = c; joinClass(); };
+    box.appendChild(b);
+  });
+}
+$('clearRec').onclick = () => { store.set('recent', '[]'); renderRec(); };
+$('genBtn').onclick = () => {
+  const a = 'abcdefghjkmnpqrstuvwxyz23456789'; let s = '';
+  for (let i = 0; i < 5; i++) s += a[Math.floor(Math.random() * a.length)];
+  $('code').value = 'class-' + s; $('homeErr').textContent = '';
+};
+$('code').addEventListener('keydown', e => { if (e.key === 'Enter') joinClass(); });
+
+function openHome(){
+  $('homeName').textContent = name;
+  $('homeAv').textContent = name[0].toUpperCase();
+  $('homeRole').textContent = isTeacher() ? 'Teacher' : 'Student';
+  $('heroT').textContent = isTeacher() ? 'Aaj kaunsi class lenge?' : 'Class mein judne ke liye code daalo';
+  $('joinBtn').textContent = isTeacher() ? 'Class shuru karo' : 'Class join karo';
+  $('genBtn').hidden = !isTeacher();
+  $('homeErr').textContent = '';
+  renderRec(); show('home');
+}
+
+/* ---------- Live class ---------- */
+let client, localAudio, localVideo, screenTrack, sharing = false, joined = false, myUid = 0, pinned = null, timerI, startedAt, curCode = '';
+const tiles = new Map();
+const makeUid = () => (isTeacher() ? 1000000000 : 2000000000) + Math.floor(Math.random() * 99999999);
+const isTeacherUid = (u) => u >= 1000000000 && u < 2000000000;
+const labelFor = (u) => isTeacherUid(u) ? 'Teacher' : 'Student';
+
+function makeTile(uid, label, isMe){
+  const key = String(uid);
+  if (tiles.has(key)) return tiles.get(key);
+  const t = document.createElement('div'); t.className = 'tile'; t.dataset.uid = key;
+  const ph = document.createElement('div'); ph.className = 'ph'; const sp = document.createElement('span'); sp.textContent = label[0].toUpperCase(); ph.appendChild(sp);
+  const v = document.createElement('div'); v.className = 'vid';
+  const nm = document.createElement('div'); nm.className = 'nm'; nm.textContent = isMe ? label + ' (aap)' : label;
+  t.append(ph, v, nm);
+  if (isTeacherUid(Number(uid))) { const r = document.createElement('div'); r.className = 'role'; r.textContent = 'Teacher'; t.appendChild(r); }
+  t.onclick = () => { pinned = key; layout(); };
+  tiles.set(key, t); layout(); return t;
+}
+function dropTile(uid){ const k = String(uid); const t = tiles.get(k); if (t) { t.remove(); tiles.delete(k); if (pinned === k) pinned = null; layout(); } }
+function layout(){
+  const keys = [...tiles.keys()]; if (!keys.length) return;
+  let main = pinned && tiles.has(pinned) ? pinned : (keys.find(k => isTeacherUid(Number(k)) && k !== String(myUid)) || keys.find(k => k !== String(myUid)) || keys[0]);
+  tiles.forEach((t, k) => (k === main ? $('stage') : $('strip')).appendChild(t));
+  $('count').textContent = keys.length;
+}
+const setPh = (uid, vis) => { const t = tiles.get(String(uid)); if (t) t.querySelector('.ph').style.display = vis ? 'grid' : 'none'; };
+const setBtn = (id, off) => { $(id).classList.toggle('off', off); };
+const myVid = () => tiles.get(String(myUid)).querySelector('.vid');
+
+async function ensure(kind){
+  if (kind === 'mic' && !localAudio) { localAudio = await AgoraRTC.createMicrophoneAudioTrack(); await client.publish(localAudio); }
+  if (kind === 'cam' && !localVideo) {
+    localVideo = await AgoraRTC.createCameraVideoTrack({ encoderConfig: '720p_2' });
+    if (!sharing) { await client.publish(localVideo); localVideo.play(myVid()); setPh(myUid, false); }
+  }
+}
+
+async function joinClass(){
+  const code = $('code').value.trim().toLowerCase();
+  if (!/^[a-z0-9_-]{3,40}$/.test(code)) { $('homeErr').textContent = 'Class code 3 se 40 akshar ka hona chahiye. Sirf a-z, 0-9, - aur _ chalenge.'; return; }
+  $('joinBtn').disabled = true; $('homeErr').textContent = '';
+  try {
+    myUid = makeUid();
+    const r = await fetch('/api/token?channel=' + encodeURIComponent(code) + '&uid=' + myUid);
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || 'Server se token nahi mila');
+
+    client = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' });
+    client.enableAudioVolumeIndicator();
+    client.on('user-joined', u => { makeTile(u.uid, labelFor(u.uid)); toast(labelFor(u.uid) + ' class mein aaya'); });
+    client.on('user-left', u => { dropTile(u.uid); toast(labelFor(u.uid) + ' class se gaya'); });
+    client.on('user-published', async (u, type) => {
+      await client.subscribe(u, type);
+      const t = makeTile(u.uid, labelFor(u.uid));
+      if (type === 'video') { setPh(u.uid, false); u.videoTrack.play(t.querySelector('.vid')); }
+      if (type === 'audio') u.audioTrack.play();
+    });
+    client.on('user-unpublished', (u, type) => { if (type === 'video') setPh(u.uid, true); });
+    client.on('volume-indicator', vols => {
+      tiles.forEach(t => t.classList.remove('speaking'));
+      vols.forEach(v => { if (v.level > 8) { const t = tiles.get(String(v.uid === 0 ? myUid : v.uid)); if (t) t.classList.add('speaking'); } });
+    });
+    client.on('network-quality', s => { const q = s.uplinkNetworkQuality; $('net').className = 'net q' + (q === 0 ? 4 : Math.max(1, Math.min(4, 5 - q))); });
+
+    await client.join(d.appId, code, d.token, myUid);
+    joined = true; curCode = code; addRec(code);
+    tiles.clear(); $('stage').innerHTML = ''; $('strip').innerHTML = ''; pinned = null;
+    makeTile(myUid, name, true);
+    $('roomName').textContent = code; $('roomHint').textContent = '';
+    $('shareBtn').hidden = !(isTeacher() && navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia);
+    setBtn('micBtn', true); setBtn('camBtn', true); $('shareBtn').classList.remove('on');
+    show('room');
+    startedAt = Date.now(); clearInterval(timerI);
+    timerI = setInterval(() => { const s = Math.floor((Date.now() - startedAt) / 1000), p = n => String(n).padStart(2, '0'); $('timer').textContent = (s >= 3600 ? p(Math.floor(s / 3600)) + ':' : '') + p(Math.floor(s / 60) % 60) + ':' + p(s % 60); }, 1000);
+
+    if (isTeacher()) {
+      try { await ensure('mic'); await ensure('cam'); setBtn('micBtn', false); setBtn('camBtn', false); }
+      catch (e) { $('roomHint').textContent = 'Camera aur mic ki permission allow karo, phir neeche ke buttons dabao.'; }
+    } else { $('roomHint').textContent = 'Bolne ke liye mic ya camera ka button dabao.'; }
+  } catch (e) {
+    $('homeErr').textContent = 'Class join nahi ho payi. ' + (e.message || e);
+    try { if (client && joined) await client.leave(); } catch (_) {}
+    joined = false;
+  } finally { $('joinBtn').disabled = false; }
+}
+$('joinBtn').onclick = joinClass;
+
+$('micBtn').onclick = async () => {
+  try {
+    if (!localAudio) await ensure('mic'); else await localAudio.setEnabled(!localAudio.enabled);
+    setBtn('micBtn', !localAudio.enabled);
+  } catch (e) { toast('Mic chalu nahi hua. Browser mein permission allow karo.'); }
+};
+$('camBtn').onclick = async () => {
+  if (sharing) { toast('Screen share band karke camera chalao.'); return; }
+  try {
+    if (!localVideo) await ensure('cam'); else { await localVideo.setEnabled(!localVideo.enabled); }
+    const on = localVideo.enabled;
+    setPh(myUid, !on); setBtn('camBtn', !on);
+  } catch (e) { toast('Camera chalu nahi hua. Browser mein permission allow karo.'); }
+};
+async function stopShare(){
+  if (!sharing) return; sharing = false;
+  try { await client.unpublish(screenTrack); } catch (e) {}
+  screenTrack.close(); screenTrack = null; $('shareBtn').classList.remove('on');
+  if (localVideo && localVideo.enabled) { await client.publish(localVideo); localVideo.play(myVid()); setPh(myUid, false); }
+  else setPh(myUid, true);
+}
+$('shareBtn').onclick = async () => {
+  if (sharing) { await stopShare(); return; }
+  try {
+    const s = await AgoraRTC.createScreenVideoTrack({ encoderConfig: '1080p_1' }, 'disable');
+    if (localVideo) { try { await client.unpublish(localVideo); } catch (e) {} }
+    screenTrack = s; await client.publish(s); sharing = true;
+    s.play(myVid()); setPh(myUid, false); $('shareBtn').classList.add('on');
+    s.on('track-ended', stopShare);
+  } catch (e) { toast('Screen share shuru nahi hua.'); }
+};
+$('copyBtn').onclick = async () => {
+  const link = location.origin + '/?c=' + encodeURIComponent(curCode);
+  try { await navigator.clipboard.writeText(link); toast('Class link copy ho gaya'); }
+  catch (e) { toast('Link: ' + link); }
+};
+$('leaveBtn').onclick = async () => {
+  clearInterval(timerI);
+  try { if (sharing) await stopShare(); localAudio && localAudio.close(); localVideo && localVideo.close(); if (client) await client.leave(); } catch (e) {}
+  localAudio = localVideo = screenTrack = null; sharing = false; joined = false;
+  tiles.clear(); $('stage').innerHTML = ''; $('strip').innerHTML = '';
+  openHome();
+};
+
+/* ---------- Start ---------- */
+const urlCode = new URLSearchParams(location.search).get('c');
+if (name) { $('name').value = name; syncSeg(); openHome(); if (urlCode) $('code').value = urlCode; }
+else if (urlCode) { store.set('pendingCode', urlCode); }
+$('loginBtn').addEventListener('click', () => { const p = urlCode || store.get('pendingCode'); if (p && name) $('code').value = p; });
+</script>
+</body>
+</html>
